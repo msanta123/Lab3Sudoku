@@ -141,15 +141,15 @@ public class Sudoku extends LatinSquare {
 
 		int[] reg = new int[super.getLatinSquare().length];
 
-		int i = (r % iSqrtSize) * iSqrtSize;
-		int j = (r / iSqrtSize) * iSqrtSize;
-		int iMax = i + iSqrtSize;
+		int j = (r % iSqrtSize) * iSqrtSize;
+		int i = (r / iSqrtSize) * iSqrtSize;
 		int jMax = j + iSqrtSize;
+		int iMax = i + iSqrtSize;
 		int iCnt = 0;
 
-		for (; j < jMax; j++) {
-			for (i = (r % iSqrtSize) * iSqrtSize; i < iMax; i++) {
-				reg[iCnt++] = super.getLatinSquare()[j][i];
+		for (; i < iMax; i++) {
+			for (j = (r % iSqrtSize) * iSqrtSize; j < jMax; j++) {
+				reg[iCnt++] = super.getLatinSquare()[i][j];
 			}
 		}
 

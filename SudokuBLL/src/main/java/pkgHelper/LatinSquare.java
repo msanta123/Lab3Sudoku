@@ -113,6 +113,8 @@ public class LatinSquare {
 	}
 
 	/**
+	 * @version 1.2
+	 * @since Lab #2
 	 * If there are any duplicates in any row or any column, return 'true'
 	 * @return Return 'true' if any element in column or row is duplicate
 	 */
@@ -130,6 +132,14 @@ public class LatinSquare {
 		
 		return false;
 	}
+	
+	/**
+	 * Remove any zeros in an array
+	 * @version 1.2
+	 * @since Lab #2
+	 * @param arr
+	 * @return
+	 */
 	private int[] RemoveZeros(int[] arr) {
 		while (ArrayUtils.contains(arr, 0))
 			arr = ArrayUtils.removeElement(arr, 0);
