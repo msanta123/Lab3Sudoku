@@ -155,6 +155,20 @@ public class Sudoku extends LatinSquare {
 
 		return reg;
 	}
+	
+	private boolean Sudoku_hasDuplicates()
+	{
+		if (super.hasDuplicates())
+			return true;
+		
+		for (int k = 0; k < this.getPuzzle().length; k++) {
+			if (super.hasDuplicates(getRegion(k))) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
 
 	/**
 	 * isPartialSudoku - return 'true' if...
@@ -170,29 +184,14 @@ public class Sudoku extends LatinSquare {
 	 */
 	public boolean isPartialSudoku() {
 
-		if (!super.isLatinSquare()) {
+		this.setbIgnoreZero(true);
+		
+		if (Sudoku_hasDuplicates())
 			return false;
-		}
-
-		for (int k = 0; k < this.getPuzzle().length; k++) {
-
-			if (super.hasDuplicates(getRegion(k))) {
-				return false;
-			}
-
-			if (!hasAllValues(getRow(0), getRegion(k))) {
-				return false;
-			}
-		}
-
-		if (isSudoku()) {
-			return true;
-		}
 
 		if (!ContainsZero()) {
 			return false;
 		}
-
 		return true;
 
 	}
@@ -208,8 +207,19 @@ public class Sudoku extends LatinSquare {
 	 */
 	public boolean isSudoku() {
 
-		if (!isPartialSudoku()) {
+		this.setbIgnoreZero(false);
+		
+		if (Sudoku_hasDuplicates())
 			return false;
+		
+		if (!super.isLatinSquare())
+			return false;
+		
+		for (int i = 1; i < super.getLatinSquare().length; i++) {
+
+			if (!hasAllValues(getRow(0), getRegion(i))) {
+				return false;
+			}
 		}
 
 		if (ContainsZero()) {

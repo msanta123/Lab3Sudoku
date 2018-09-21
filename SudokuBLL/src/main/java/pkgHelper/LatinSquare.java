@@ -2,6 +2,8 @@ package pkgHelper;
 
 import java.util.Arrays;
 
+import org.apache.commons.lang.ArrayUtils;
+
 public class LatinSquare {
 
 	/**
@@ -13,25 +15,32 @@ public class LatinSquare {
 	private int[][] LatinSquare;
 
 	/**
+	 * @version 1.2
+	 * @since Lab #1
+	 */
+	private boolean bIgnoreZero;
+
+	/**
 	 * No-arg constructor, make it public, don't do anything in the constructor
 	 * 
 	 * @version 1.1
 	 * @since Lab #1
 	 */
 	public LatinSquare() {
-
+		super();
+		this.bIgnoreZero = false;
 	}
 
 	/**
 	 * Pass in a given puzzle, set the LatinSquare
 	 * 
-	 * @param puzzle
-	 *            Pass in given LatinSquare puzzle (probably for testing)
+	 * @param puzzle Pass in given LatinSquare puzzle (probably for testing)
 	 * @version 1.1
 	 * @since Lab #1
 	 */
 
 	public LatinSquare(int[][] puzzle) {
+		this();
 		this.LatinSquare = puzzle;
 	}
 
@@ -51,8 +60,7 @@ public class LatinSquare {
 	 * 
 	 * @version 1.1
 	 * @since Lab #1
-	 * @param latinSquare
-	 *            - pass in an instance of a possible LatinSquare
+	 * @param latinSquare - pass in an instance of a possible LatinSquare
 	 */
 
 	public void setLatinSquare(int[][] latinSquare) {
@@ -60,20 +68,39 @@ public class LatinSquare {
 	}
 
 	/**
+	 * Should the processing ignore zeros (hasDuplicates, etc)
+	 * 
+	 * @return
+	 */
+	public boolean isbIgnoreZero() {
+		return bIgnoreZero;
+	}
+
+	/**
+	 * Should the processing ignore zeros (hasDuplicates, etc)
+	 * 
+	 * @param bIgnoreZero
+	 */
+	public void setbIgnoreZero(boolean bIgnoreZero) {
+		this.bIgnoreZero = bIgnoreZero;
+	}
+
+	/**
 	 * Pass in a one-dimension array, pass back true if there is a duplicate value
 	 * 
 	 * @version 1.1
 	 * @since Lab #1
-	 * @param arr
-	 *            - one dimensional array to check for duplicates
+	 * @param arr - one dimensional array to check for duplicates
 	 * @return - returns 'true' if any of the elements are duplicate
 	 */
 	public boolean hasDuplicates(int[] arr) {
 
-		// TODO: Return 'true' if any element in arr is duplicate
-
 		boolean hasDuplicates = false;
 		int[] sortedArray = Arrays.copyOf(arr, arr.length);
+
+		if (bIgnoreZero)
+			sortedArray = RemoveZeros(sortedArray);
+
 		Arrays.sort(sortedArray);
 
 		for (int i = 0; i < sortedArray.length - 1; i++) {
@@ -86,19 +113,41 @@ public class LatinSquare {
 	}
 
 	/**
+	 * If there are any duplicates in any row or any column, return 'true'
+	 * @return Return 'true' if any element in column or row is duplicate
+	 */
+	protected boolean hasDuplicates()
+	{
+		for (int i = 0; i < LatinSquare.length; i++) {
+			if (hasDuplicates(getRow(i)))
+				return true;
+		}
+
+		for (int j = 0; j < LatinSquare.length; j++) {
+			if (hasDuplicates(getColumn(j)))
+				return true;
+		}
+		
+		return false;
+	}
+	private int[] RemoveZeros(int[] arr) {
+		while (ArrayUtils.contains(arr, 0))
+			arr = ArrayUtils.removeElement(arr, 0);
+		
+		return arr;
+	}
+
+	/**
 	 * doesElementExist - pass in one-dimension array and a value, if value exists
 	 * in array... then return true
 	 * 
 	 * @version 1.1
 	 * @since Lab #1
-	 * @param arr
-	 *            - one dimensional array to check
-	 * @param iValue
-	 *            - value to check against one dimensional array
+	 * @param arr    - one dimensional array to check
+	 * @param iValue - value to check against one dimensional array
 	 * @return - return 'true' if iValue exists in arr
 	 */
 	public boolean doesElementExist(int[] arr, int iValue) {
-		// TODO: Return 'true' if iValue is found in arr
 
 		boolean doesElementExist = false;
 		for (int i = 0; i < arr.length; i++) {
@@ -116,14 +165,11 @@ public class LatinSquare {
 	 * 
 	 * @version 1.1
 	 * @since Lab #1
-	 * @param arr1
-	 *            target array
-	 * @param arr2
-	 *            source array
+	 * @param arr1 target array
+	 * @param arr2 source array
 	 * @return return 'true' if every element from source array is in target array
 	 */
 	public boolean hasAllValues(int[] arr1, int[] arr2) {
-		// TODO: Return 'true' if every element from arr2 is in arr1
 
 		boolean hasAllValues = true;
 		for (int j = 0; j < arr2.length; j++) {
@@ -160,13 +206,10 @@ public class LatinSquare {
 	 *
 	 * @version 1.1
 	 * @since Lab #1
-	 * @param iCol
-	 *            The column you want returned from the two-dimensional array
+	 * @param iCol The column you want returned from the two-dimensional array
 	 * @return one dimensional array of values for the given column
 	 */
 	public int[] getColumn(int iCol) {
-
-		// TODO: Return a given column from LatinSquare
 
 		int[] Col = new int[this.LatinSquare.length];
 
@@ -188,12 +231,10 @@ public class LatinSquare {
 	 * 
 	 * @version 1.1
 	 * @since Lab #1
-	 * @param iRow
-	 *            given row of the two dimensional array to return
+	 * @param iRow given row of the two dimensional array to return
 	 * @return one dimensional array of the given row
 	 */
 	public int[] getRow(int iRow) {
-		// TODO: Return a given row from LatinSquare
 
 		int[] Row = new int[this.LatinSquare.length];
 
@@ -214,23 +255,19 @@ public class LatinSquare {
 	public boolean isLatinSquare() {
 
 		boolean isLatinSquare = true;
-		// TODO: Return 'true' if...
+		// Return 'true' if...
 		// Each row and column doesn't contain duplicates
 		// If each element in the first row is found in every other row
 		// If each element in the first coumn is found in every other column
 
 		// Check to see if the any row or column has duplicates. If they do, return
 		// false;
-		for (int i = 0; i < LatinSquare.length; i++) {
-			if (hasDuplicates(getRow(i)))
-				return false;
-		}
 
-		for (int j = 0; j < LatinSquare.length; j++) {
-			if (hasDuplicates(getColumn(j)))
-				return false;
-		}
 
+		if (hasDuplicates())
+			return false;
+		
+		
 		for (int i = 1; i < LatinSquare.length; i++) {
 
 			if (!hasAllValues(getRow(0), getRow(i))) {
