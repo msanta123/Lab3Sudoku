@@ -156,7 +156,10 @@ public class Sudoku extends LatinSquare {
 		return reg;
 	}
 	
-	private boolean Sudoku_hasDuplicates()
+ 
+	
+	@Override
+	public boolean hasDuplicates()
 	{
 		if (super.hasDuplicates())
 			return true;
@@ -186,7 +189,7 @@ public class Sudoku extends LatinSquare {
 
 		this.setbIgnoreZero(true);
 		
-		if (Sudoku_hasDuplicates())
+		if (hasDuplicates())
 			return false;
 
 		if (!ContainsZero()) {
@@ -209,7 +212,7 @@ public class Sudoku extends LatinSquare {
 
 		this.setbIgnoreZero(false);
 		
-		if (Sudoku_hasDuplicates())
+		if (hasDuplicates())
 			return false;
 		
 		if (!super.isLatinSquare())
