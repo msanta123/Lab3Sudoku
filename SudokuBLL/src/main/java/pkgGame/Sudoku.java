@@ -88,7 +88,10 @@ public class Sudoku extends LatinSquare {
 	public int[][] getPuzzle() {
 		return super.getLatinSquare();
 	}
-
+	public int getRegionNbr(int iCol, int iRow) {
+		int i = (iCol / iSqrtSize) + ((iRow / iSqrtSize) * iSqrtSize);
+		return i;
+	}
 	/**
 	 * getRegion - figure out what region you're in based on iCol and iRow and call
 	 * getRegion(int)<br>
@@ -247,6 +250,51 @@ public class Sudoku extends LatinSquare {
 	 * @return - returns 'true' if the proposed value is valid for the row and column
 	 */
 	public boolean isValidValue(int iCol, int iRow, int iValue) {
-		return false;
+		
+		if (doesElementExist(super.getRow(iRow),iValue))
+		{
+			return false;
+		}
+		if (doesElementExist(super.getColumn(iCol),iValue))
+		{
+			return false;
+		}
+		if (doesElementExist(this.getRegion(iCol, iRow),iValue))
+		{
+			return false;
+		}
+		
+		return true;
+	}
+	public void printPuzzle() {
+		for(int i = 0; i < iSize;i++) {
+			System.out.println(getRow(i));;
+		}
+	}
+	private void fillDiagonalRegions() {
+	
+	}
+	public void setRegion(int r) {
+		int[] workingRegion = getRegion(r);
+		for (int i = 0; i < iSize; i++) {
+			workingRegion[i] = i + 1;
+		}
+		int[][] puzzle = getPuzzle();
+		int i = (r / iSqrtSize) * iSqrtSize;
+		int j = (r % iSqrtSize) * iSqrtSize;		
+		int jMax = j + iSqrtSize;
+		int iMax = i + iSqrtSize;
+		int iCnt = 0;
+		
+		for (; i < iMax; i++) {
+			for (j = (r % iSqrtSize) * iSqrtSize; j < jMax; j++) {
+				puzzle[i][j] = workingRegion[iCnt++];
+			}
+		}
+		super.setLatinSquare(puzzle);
+		
+	}
+	private void shuffleRegion(int r) {
+		
 	}
 }
