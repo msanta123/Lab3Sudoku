@@ -1,4 +1,4 @@
-package pkgGame;
+package pkgTest;
 
 import static org.junit.Assert.*;
 
@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import pkgGame.Sudoku;
 public class SudokuTest {
-
 	@Test
 	public void Sudoku_Test1() {
 
@@ -18,14 +18,32 @@ public class SudokuTest {
 		}
 
 	}
-
 	@Test(expected = Exception.class)
 	public void Sudoku_Test2() throws Exception {
 
 		Sudoku s1 = new Sudoku(10);
 
 	}
-
+	@Test
+	public void getRegionNbr_Test1() {
+		int[][] puzzle = { { 1, 2, 3, 4 }, { 3, 4, 1, 2 }, { 2, 1, 4, 3 }, { 4, 3, 2, 1 } };
+		int ExpectedRegionNbr = 1;
+		//
+		// 1 2 3 4
+		// 3 4 1 2
+		// 2 1 4 3
+		// 4 3 2 1
+		//
+		// region 0 = 1 2 3 4
+		// region 1 = 3 4 1 2
+		
+		try {
+			Sudoku s1 = new Sudoku(puzzle);
+			assertEquals(s1.getRegionNbr(3,0),ExpectedRegionNbr);
+		} catch (Exception e) {
+			fail("Test failed to build a Sudoku");
+		}
+	}
 	@Test
 	public void getRegion_Test1() {
 
@@ -230,5 +248,120 @@ public class SudokuTest {
 		}
 		
 	}	
-
+	@Test
+	public void shuffleArray_test1()
+	{
+		Sudoku s1= null;
+		
+		int[][] puzzle = { 
+				{1,2,3,4},{4,3,2,1},{2,1,4,3},{3,5,1,2}};
+		
+		int [] Region1 = {1,2,3,4};
+		try {
+			 s1 = new Sudoku(puzzle);
+			 s1.shuffleArray(Region1);
+			 System.out.println(Arrays.toString(Region1));
+		} catch (Exception e) {
+			fail("Bad Sudoku");
+		}
+			
+			
+		
+	}
+	
+	@Test
+	public void shuffleArray_test2()
+	{
+		Sudoku s1= null;
+		
+		int[][] puzzle = { 
+				{1,2,3,4},{4,3,2,1},{2,1,4,3},{3,5,1,2}};
+		
+		int [] Region2 = {4,3,2,1};
+		try {
+			 s1 = new Sudoku(puzzle);
+			 s1.shuffleArray(Region2);
+			 System.out.println(Arrays.toString(Region2));
+		} catch (Exception e) {
+			fail("Bad Sudoku");
+		}
+			
+			
+		
+	}
+	
+	@Test
+	public void shuffleArray_test3()
+	{
+		Sudoku s1= null;
+		
+		int[][] puzzle = { 
+				{1,2,3,4},{4,3,2,1},{2,1,4,3},{3,5,1,2}};
+		
+		int [] Region3 = {2,1,4,3};
+		try {
+			 s1 = new Sudoku(puzzle);
+			 s1.shuffleArray(Region3);
+			 System.out.println(Arrays.toString(Region3));
+		} catch (Exception e) {
+			fail("Bad Sudoku");
+		}
+	}
+	@Test
+	public void shuffleRegion_test1() {
+		Sudoku s1= null;
+		
+		int[][] puzzle = {{1,2,3,4},{4,3,2,1},{2,1,4,3},{3,4,1,2}};
+		
+		try {
+			 s1 = new Sudoku(puzzle);
+			 s1.shuffleRegion(2);
+			 System.out.println(s1);
+		} catch (Exception e) {
+			fail("Bad Sudoku");
+		}
+	}
+	@Test
+	public void shuffleRegion_test2() {
+		Sudoku s1= null;
+		
+		int[][] puzzle = {{1,2,3,4},{4,3,2,1},{2,1,4,3},{3,4,1,2}};
+		
+		try {
+			 s1 = new Sudoku(puzzle);
+			 s1.shuffleRegion(0);
+			 System.out.println(s1);
+		} catch (Exception e) {
+			fail("Bad Sudoku");
+		}
+	}
+	@Test
+	public void shuffleRegion_test3() {
+		Sudoku s1= null;
+		
+		int[][] puzzle = {{1,2,3,4},{4,3,2,1},{2,1,4,3},{3,4,1,2}};
+		
+		try {
+			 s1 = new Sudoku(puzzle);
+			 s1.shuffleRegion(3);
+			 System.out.println(s1);
+		} catch (Exception e) {
+			fail("Bad Sudoku");
+		}
+	}
+	@Test
+	public void fillDiagonalRegions_Test1() {
+		Sudoku s1 = null;
+		int[][] puzzle = {{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
+		
+		try {
+			s1 = new Sudoku(puzzle);
+			s1.fillDiagonalRegions();
+			System.out.println(s1);
+		}
+		catch (Exception e) {
+			fail("Bad Sudoku");
+		}
+	}
 }
+
