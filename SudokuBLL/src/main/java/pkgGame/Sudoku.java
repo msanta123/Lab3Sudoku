@@ -1,5 +1,5 @@
 package pkgGame;
-
+import java.util.Random;
 import pkgHelper.LatinSquare;
 
 /**
