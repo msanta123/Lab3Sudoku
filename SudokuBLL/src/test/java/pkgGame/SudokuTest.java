@@ -45,6 +45,46 @@ public class SudokuTest {
 		}
 	}
 	@Test
+	public void getRegionNbr_Test2() {
+		int[][] puzzle = { { 1, 2, 3, 4 }, { 3, 4, 1, 2 }, { 2, 1, 4, 3 }, { 4, 3, 2, 1 } };
+		int ExpectedRegionNbr = 2;
+		//
+		// 1 2 3 4
+		// 3 4 1 2
+		// 2 1 4 3
+		// 4 3 2 1
+		//
+		// region 0 = 1 2 3 4
+		// region 1 = 3 4 1 2
+		
+		try {
+			Sudoku s1 = new Sudoku(puzzle);
+			assertEquals(s1.getRegionNbr(0,3),ExpectedRegionNbr);
+		} catch (Exception e) {
+			fail("Test failed to build a Sudoku");
+		}
+	}
+	@Test
+	public void getRegionNbr_Test3() {
+		int[][] puzzle = { { 1, 2, 3, 4 }, { 3, 4, 1, 2 }, { 2, 1, 4, 3 }, { 4, 3, 2, 1 } };
+		int ExpectedRegionNbr = 0;
+		//
+		// 1 2 3 4
+		// 3 4 1 2
+		// 2 1 4 3
+		// 4 3 2 1
+		//
+		// region 0 = 1 2 3 4
+		// region 1 = 3 4 1 2
+		
+		try {
+			Sudoku s1 = new Sudoku(puzzle);
+			assertEquals(s1.getRegionNbr(0,0),ExpectedRegionNbr);
+		} catch (Exception e) {
+			fail("Test failed to build a Sudoku");
+		}
+	}
+	@Test
 	public void getRegion_Test1() {
 
 		int[][] puzzle = { { 1, 2, 3, 4 }, { 3, 4, 1, 2 }, { 2, 1, 4, 3 }, { 4, 3, 2, 1 } };
