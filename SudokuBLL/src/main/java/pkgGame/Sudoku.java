@@ -268,11 +268,17 @@ public class Sudoku extends LatinSquare {
 	}
 	public void printPuzzle() {
 		for(int i = 0; i < iSize;i++) {
-			System.out.println(getRow(i));;
+			for(int j=0; j<iSize;j++) {
+				System.out.print(getLatinSquare()[i][j] + " ");
+			}
+			System.out.print("\n");
 		}
 	}
 	private void fillDiagonalRegions() {
-	
+		for(int i=0; i < iSize; i += iSqrtSize + 1) {
+			setRegion(i);
+			shuffleRegion(i);
+		}
 	}
 	public void setRegion(int r) {
 		int[] workingRegion = getRegion(r);
@@ -294,7 +300,32 @@ public class Sudoku extends LatinSquare {
 		super.setLatinSquare(puzzle);
 		
 	}
-	private void shuffleRegion(int r) {
-		
+	public void shuffleRegion(int r) {
+		setRegion(r);
+		int[] tempArray = getRegion(r);
+		shuffleArray(tempArray);
+		int[][] puzzle = getPuzzle();
+		int i = (r / iSqrtSize) * iSqrtSize;
+		int j = (r % iSqrtSize) * iSqrtSize;		
+		int jMax = j + iSqrtSize;
+		int iMax = i + iSqrtSize;
+		int iCnt = 0;
+
+		for (; i < iMax; i++) {
+			for (j = (r % iSqrtSize) * iSqrtSize; j < jMax; j++) {
+				puzzle[i][j] = tempArray[iCnt++];
+			}
+		}
+		setLatinSquare(puzzle);
+	}
+	public void shuffleArray(int[] arr) {
+		Random r = new Random();
+		for(int i =0; i<arr.length;i++)
+		{
+			int randPos =r.nextInt(arr.length);
+			int temp = arr[i];
+			arr[i]=arr[randPos];
+			arr[randPos]=temp;
+		}
 	}
 }
